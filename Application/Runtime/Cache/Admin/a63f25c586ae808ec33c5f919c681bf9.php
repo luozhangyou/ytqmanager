@@ -6,24 +6,24 @@
  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
  <title>后台管理系统</title>
  
- <link rel="stylesheet" type="text/css" href="/taoyongjin/Public/Admin/widget/jquery-easyui-1.4.4/themes/bootstrap/easyui.css" />
- <link rel="stylesheet" type="text/css" href="/taoyongjin/Public/Admin/widget/jquery-easyui-1.4.4/themes/icon.css" />
- <script type="text/javascript" src="/taoyongjin/Public/Admin/widget/jquery-easyui-1.4.4/jquery.min.js"></script>
- <script type="text/javascript" src="/taoyongjin/Public/Admin/widget/jquery-easyui-1.4.4/jquery.easyui.min.js"></script>
- <script type="text/javascript" src="/taoyongjin/Public/Admin/widget/jquery-easyui-1.4.4/locale/easyui-lang-zh_CN.js"></script>
+ <link rel="stylesheet" type="text/css" href="/ytqmanager/Public/Admin/widget/jquery-easyui-1.4.4/themes/bootstrap/easyui.css" />
+ <link rel="stylesheet" type="text/css" href="/ytqmanager/Public/Admin/widget/jquery-easyui-1.4.4/themes/icon.css" />
+ <script type="text/javascript" src="/ytqmanager/Public/Admin/widget/jquery-easyui-1.4.4/jquery.min.js"></script>
+ <script type="text/javascript" src="/ytqmanager/Public/Admin/widget/jquery-easyui-1.4.4/jquery.easyui.min.js"></script>
+ <script type="text/javascript" src="/ytqmanager/Public/Admin/widget/jquery-easyui-1.4.4/locale/easyui-lang-zh_CN.js"></script>
   
- <script type="text/javascript" src="/taoyongjin/Public/Admin/theme/defalut/js/objFunc.js"></script>
- <script type="text/javascript" src="/taoyongjin/Public/Admin/theme/defalut/js/jquery.ajax.js"></script> 
- <script type="text/javascript" src="/taoyongjin/Public/Admin/theme/defalut/js/util.js"></script>  
- <link rel="stylesheet" type="text/css" href="/taoyongjin/Public/Admin/widget/4.2.0/css/font-awesome.min.css" />
- <link rel="stylesheet" type="text/css" href="/taoyongjin/Public/Admin/theme/defalut/css/style.css" />
- <link rel="stylesheet" type="text/css" href="/taoyongjin/Public/Admin/theme/defalut/css/expand.css" /> 
+ <script type="text/javascript" src="/ytqmanager/Public/Admin/theme/defalut/js/objFunc.js"></script>
+ <script type="text/javascript" src="/ytqmanager/Public/Admin/theme/defalut/js/jquery.ajax.js"></script> 
+ <script type="text/javascript" src="/ytqmanager/Public/Admin/theme/defalut/js/util.js"></script>  
+ <link rel="stylesheet" type="text/css" href="/ytqmanager/Public/Admin/widget/4.2.0/css/font-awesome.min.css" />
+ <link rel="stylesheet" type="text/css" href="/ytqmanager/Public/Admin/theme/defalut/css/style.css" />
+ <link rel="stylesheet" type="text/css" href="/ytqmanager/Public/Admin/theme/defalut/css/expand.css" /> 
  
 
-<link rel="stylesheet" type="text/css" href="/taoyongjin/Public/Admin/widget/umeditor1_2_2-utf8-php/themes/default/css/umeditor.min.css" />
-<script type="text/javascript" src="/taoyongjin/Public/Admin/widget/umeditor1_2_2-utf8-php/umeditor.config.js"></script>
-<script type="text/javascript" src="/taoyongjin/Public/Admin/widget/umeditor1_2_2-utf8-php/umeditor.min.js"></script>
-<script type="text/javascript" src="/taoyongjin/Public/Admin/widget/umeditor1_2_2-utf8-php/lang/zh-cn/zh-cn.js"></script>
+<link rel="stylesheet" type="text/css" href="/ytqmanager/Public/Admin/widget/umeditor1_2_2-utf8-php/themes/default/css/umeditor.min.css" />
+<script type="text/javascript" src="/ytqmanager/Public/Admin/widget/umeditor1_2_2-utf8-php/umeditor.config.js"></script>
+<script type="text/javascript" src="/ytqmanager/Public/Admin/widget/umeditor1_2_2-utf8-php/umeditor.min.js"></script>
+<script type="text/javascript" src="/ytqmanager/Public/Admin/widget/umeditor1_2_2-utf8-php/lang/zh-cn/zh-cn.js"></script>
 
 </head>
 <body class="easyui-layout">
@@ -33,7 +33,7 @@ $(function(){
 	$("#clearCache").click(function(){
 		var o={};
 		o['type']="Admin-Home";
-		var obj=ajaxReturnList("/taoyongjin/Admin/Index/clearCache",o);
+		var obj=ajaxReturnList("/ytqmanager/Admin/Index/clearCache",o);
 		$.messager.alert('系统提示', obj.msg , 'info');
 	});
 	
@@ -46,7 +46,7 @@ $(function(){
                 heiht: 400,
                 border: false,
                 title: '修改密码',
-                href: '/taoyongjin/Admin/Index/password'
+                href: '/ytqmanager/Admin/Index/password'
             });
         },
         onShow: function(){
@@ -62,7 +62,7 @@ $(function(){
 </script>
 <div class="logo">
   <script language="javascript">
-   document.write('<img id="logoImg" src="/taoyongjin/Public/Admin/theme/defalut/image/logo.png" /></div>');
+   document.write('<img id="logoImg" src="/ytqmanager/Public/Admin/theme/defalut/image/logo.png" /></div>');
   </script>
   <div class="show">
    <div class="l2">
@@ -72,7 +72,7 @@ $(function(){
    			您好：<strong><?php echo $_SESSION['nickname']?></strong> 
    			[<a id="updatePassword" href="javascript:;">修改密码</a>]
    			[<a id="clearCache" href="javascript:;">清除缓存</a>]
-   			[<a target="_top" href="/taoyongjin/Home/Login/logout_manange">安全退出</a>] 
+   			[<a target="_top" href="/ytqmanager/Home/Login/logout_manange">安全退出</a>] 
    			[<a href="javascript:;">帮助</a>]
    		</span>
    </div>
@@ -133,7 +133,7 @@ tick();
 	}
 	/* function initTree(){
 		 var requestData={};
-		 var data=ajaxReturnList("/taoyongjin/index.php/Admin/Node/getSessionNodeList",requestData);
+		 var data=ajaxReturnList("/ytqmanager/index.php/Admin/Node/getSessionNodeList",requestData);
 		 if(null!=data){
 			 for(var i=0;i<data.length;i++){
 				 $("#leftMenu").append('<div id="firstMenu_'+data[i].id+'" title="系统管理" data-options="iconCls:'+"'icon-setting'"+'">'+
@@ -142,7 +142,7 @@ tick();
 						 '</ul></div>');
 				 var childList=data[i].childList;
 				 for(var j=0;j<childList.length;j++){
-					 $("#firstMenu_"+data[i].id+" ul").append('<li data-options="'+"text:'"+childList[j].title+"',url:'/taoyongjin/index.php/Admin/User/index'"+'">'+childList[j].title+'</li>');
+					 $("#firstMenu_"+data[i].id+" ul").append('<li data-options="'+"text:'"+childList[j].title+"',url:'/ytqmanager/index.php/Admin/User/index'"+'">'+childList[j].title+'</li>');
 				 }
 			 }
 		 }
@@ -155,7 +155,7 @@ tick();
 <div id="leftMenu" data-options="fit:true,border:false" class="easyui-accordion">
   <?php if(is_array($menuList)): foreach($menuList as $key=>$menu): ?><div title="<?php echo ($menu["title"]); ?>" data-options="iconCls:'icon-setting'">
 		 <ul class="easyui-tree left-tree" data-options="editable:false,lines:true,onClick:function(node){onClickTree(node);}">
-      		<?php if(is_array($menu['children'])): foreach($menu['children'] as $key=>$item): ?><li data-options="id:'<?php echo ($item["id"]); ?>',text:'<?php echo ($item["title"]); ?>',url:'/taoyongjin/Admin/<?php echo ($menu["name"]); ?>/<?php echo ($item["name"]); ?>'"><?php echo ($item["title"]); ?></li><?php endforeach; endif; ?>
+      		<?php if(is_array($menu['children'])): foreach($menu['children'] as $key=>$item): ?><li data-options="id:'<?php echo ($item["id"]); ?>',text:'<?php echo ($item["title"]); ?>',url:'/ytqmanager/Admin/<?php echo ($menu["name"]); ?>/<?php echo ($item["name"]); ?>'"><?php echo ($item["title"]); ?></li><?php endforeach; endif; ?>
 		 </ul>
 		</div><?php endforeach; endif; ?>
 </div>
@@ -165,7 +165,7 @@ tick();
  </div>
  <div data-options="region:'center',split:true">
   <div id="rightTabs" class="easyui-tabs" data-options="fit:true,border:false">
-    <div title="控制台" data-options="closable:false,id:-1,href:'/taoyongjin/index.php/Admin/Index/console'"></div>
+    <div title="控制台" data-options="closable:false,id:-1,href:'/ytqmanager/index.php/Admin/Index/console'"></div>
   </div>
  </div>
  <div id="repwd"></div>

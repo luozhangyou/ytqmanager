@@ -27,7 +27,7 @@ $(function(){
 		pagination:pn,
 		pageSize:pr,
 		pageList:[30,50,80,100],
-		url:'/taoyongjin/Admin/Role/pageList',
+		url:'/ytqmanager/Admin/Role/pageList',
 		rownumbers:true,
 		fitColumns:true,
 		nowrap:true,
@@ -81,7 +81,7 @@ $(function(){
 				}else{
 					var o={};
 					o['role_id']=selectedRow.id;
-					var rows=ajaxReturnList("/taoyongjin/Admin/Role/getRoleAccess",o);
+					var rows=ajaxReturnList("/ytqmanager/Admin/Role/getRoleAccess",o);
 					var node=null;
 					for(var i=0;i<rows.length;i++){
 						 node = $('#authTree').tree('find', rows[i].node_id);
@@ -101,7 +101,7 @@ $(function(){
 					$.messager.alert('警告','请先选择一行！','warning');
 				}else{
 					var ids=selectedRow.id;
-					ajaxDelRowsDatagrid('/taoyongjin/Admin/Role/delRows',ids,tableList);
+					ajaxDelRowsDatagrid('/ytqmanager/Admin/Role/delRows',ids,tableList);
 				}
 			}
 		},'-',{
@@ -142,7 +142,7 @@ $(function(){
 		]]
 	});
 	$("#"+saveBtn).click(function(){
-		ajaxSubmitForm(auForm,'/taoyongjin/Admin/Role/addOrUpdate',addDiv,tableList);
+		ajaxSubmitForm(auForm,'/ytqmanager/Admin/Role/addOrUpdate',addDiv,tableList);
 	});
 	$("#"+cancelBtn).click(function(){
 		$('#'+addDiv).window('close');
@@ -157,7 +157,7 @@ $(function(){
     		nodeIds.push(nodes[i].id);
     	}
     	o['data[nodeIds]']=nodeIds; 
-    	var obj=ajaxReturnList("/taoyongjin/Admin/Role/authorization",o);
+    	var obj=ajaxReturnList("/ytqmanager/Admin/Role/authorization",o);
     	if(obj.flag){
     		$("#authDiv_role").window("close");
     	}
@@ -168,7 +168,7 @@ $(function(){
 	});
 	
 	$('#authTree').tree({
-		url:'/taoyongjin/Admin/Node/getCombotree',
+		url:'/ytqmanager/Admin/Node/getCombotree',
 		editable:true,
 		checkbox:true,
 		cascadeCheck:false,

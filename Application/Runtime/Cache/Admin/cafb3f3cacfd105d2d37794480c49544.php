@@ -30,7 +30,7 @@ $(function(){
 		pageSize:pr,
 		lines:true,
 		pageList:[30,50,80,100],
-		url:'/taoyongjin/Admin/Node/pageLIst',
+		url:'/ytqmanager/Admin/Node/pageLIst',
 		fitColumns:true,
 		nowrap:true,
 		selectOnCheck:false,
@@ -86,7 +86,7 @@ $(function(){
 					$.messager.alert('警告','请先选择一行！','warning');
 				}else{
 					var ids=selectedRow.id;
-					ajaxDelRowsTreeGrid('/taoyongjin/Admin/Node/delRows',ids,tableList);
+					ajaxDelRowsTreeGrid('/ytqmanager/Admin/Node/delRows',ids,tableList);
 				}
 			}
 		},'-',{
@@ -135,14 +135,14 @@ $(function(){
 		]]
 	});
 	$("#"+saveBtn).click(function(){
-		ajaxSubmitFormTreeGrid(auForm,'/taoyongjin/Admin/Node/addOrUpdate',addDiv,tableList);
+		ajaxSubmitFormTreeGrid(auForm,'/ytqmanager/Admin/Node/addOrUpdate',addDiv,tableList);
 	});
 	$("#"+cancelBtn).click(function(){
 		$('#'+addDiv).window('close');
 	});
 	
 	$('#nodeComboxtree').combotree({
-		url:'/taoyongjin/Admin/Node/getParent',
+		url:'/ytqmanager/Admin/Node/getParent',
 		editable:false,
 		lines:true,
 		method:'get'
@@ -150,7 +150,7 @@ $(function(){
 });
 function initNodeComboxtree(){
 	$('#nodeComboxtree').combotree({
-		url:'/taoyongjin/Admin/Node/getParent',
+		url:'/ytqmanager/Admin/Node/getParent',
 		editable:false,
 		lines:true,
 		method:'get'
