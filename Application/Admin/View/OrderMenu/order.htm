@@ -1,6 +1,13 @@
 <script language="javascript">
+
+
+var tableList="tableList_order";
+var auForm ="addForm_order";
+var saveBtn="saveBtn_order";
+var addDiv="addDiv_order";
+var cancelBtn="cancelBtn_order";
+
 $(function(){
-	
 	$('#form_route_route').combobox({
 	    url:'__ROOT__/Admin/Route/getAll',
 	    valueField:'id',
@@ -18,23 +25,18 @@ $(function(){
 	    valueField:'id',
 	    textField:'name'
 	});
-	
-	var tableList="tableList_order";
-	var auForm ="addForm_order";
-	var saveBtn="saveBtn_order";
-	var addDiv="addDiv_order";
-	var cancelBtn="cancelBtn_order";
-	
 	var th = $(".top").height();
-	th = 111-th
+	th = 204-th
 	var wh = $(window).height()-th;
 	var pr = 30;
 	var pn = false;
 	if(pr>0){
 		pn = true;
 	}
+	var url='__ROOT__/Admin/Order/pageList';
 	$("#"+tableList).datagrid({
-		//title:'用户列表',
+		title:'控制台',
+		toolbar:'#search_order',
 		idField:'id',
 		fix:true, 
 		height:wh,
@@ -48,7 +50,7 @@ $(function(){
 		pagination:pn,
 		pageSize:pr,
 		pageList:[30,50,80,100],
-		url:'__ROOT__/Admin/Order/pageList',
+		url:url,
 		fitColumns:true,
 		nowrap:true,
 		selectOnCheck:false,
@@ -58,9 +60,21 @@ $(function(){
 			
 		},
 		onDblClickRow:function(e,rowIndex,rowData){
+			$("#idcard_order_id_order").val(rowIndex.id);
+			$(".idcard-del-control").remove();
+			var o={};
+			o['order_id']=rowIndex.id;
+			var rows=ajaxReturnList("__ROOT__/Admin/IDcard/getAllByOrderId",o);
 			
+			for(var i=0;i<rows.length;i++){
+				
+				add_idcard_tr_order(rows[i].id,rows[i].name,rows[i].card);
+				
+			}
+			
+			$('#idcardDiv_order').window('open');
 		},
-		toolbar:[{
+		/* toolbar:[{
 		iconCls: 'fa fa-easyui fa-plus-square',
 			text : '添加',
 			handler: function(){
@@ -76,7 +90,7 @@ $(function(){
 			handler: function(){
 				var selectedRow=$('#'+tableList).datagrid('getSelected');
 				if(null==selectedRow){
-					$.orderr.alert('警告','请先选择一行！','warning');
+					$.messager.alert('警告','请先选择一行！','warning');
 				}else{
 					$('#'+auForm).form('load',{
 						'data[id]':selectedRow.id,
@@ -106,7 +120,7 @@ $(function(){
 			handler: function(){
 				var selectedRow=$('#'+tableList).datagrid('getSelected');
 				if(null==selectedRow){
-					$.orderr.alert('警告','请先选择一行！','warning');
+					$.messager.alert('警告','请先选择一行！','warning');
 				}else{
 					var ids=selectedRow.id;
 					ajaxDelRowsDatagrid('__ROOT__/Admin/Order/delRows',ids,tableList);
@@ -124,11 +138,12 @@ $(function(){
 			handler: function(){
 				$("#"+tableList).datagrid('reload');
 			}
-		}],
+		}], */
 		frozenColumns:[[   
-		    
+		    {field:'id',checkbox:true},
 		]],
 		columns:[[  
+			{field:'order_num',title:'定单号',width:60,sortable:true},
 			{field:'start_time',title:'出发',width:40,sortable:true},
 			{field:'end_time',title:'完团',width:40,sortable:true},
 			{field:'record_time',title:'登记',width:40,sortable:true},
@@ -144,6 +159,7 @@ $(function(){
 			{field:'platform_name',title:'平台',width:40,sortable:true},
 			{field:'store_name',title:'店名',width:40,sortable:true},
 			{field:'tax',title:'税点（%）',width:40,sortable:true},
+			{field:'profit_price',title:'利润(RMB)',width:40,sortable:true},
 			
 			{field:'create_user',title:'创建人',width:40,sortable:true,
 				formatter: function(value,row,index){
@@ -155,7 +171,7 @@ $(function(){
 				}	
 			},
 			
-			{field:'create_time',title:'创建时间',width:40,sortable:true,formatter:formatDatebox},
+			/* {field:'create_time',title:'创建时间',width:40,sortable:true,formatter:formatDatebox}, */
 			{field:'update_user',title:'修改人',width:40,sortable:true,
 				formatter: function(value,row,index){
 					if (row.updateUser){
@@ -165,7 +181,47 @@ $(function(){
 					}
 				}		
 			},
-			{field:'update_time',title:'修改时间',width:40,sortable:true,formatter:formatDatebox},
+			/* {field:'update_time',title:'修改时间',width:40,sortable:true,formatter:formatDatebox}, */
+			{field:'shuadan_price',title:'刷单佣金',width:40,sortable:true},
+			{field:'account_status',title:'结算状态',width:40,sortable:true,
+				formatter: function(value,row,index){
+					var html='';
+					if (row.account_status){
+						if(row.account_status==1){
+							html=html+'<a href="javascript:upload_account_status_order('+row.id+');" class="easyui-linkbutton" style="width:80px;color:blue;">未结算</a>';
+						}else if(row.account_status==2){
+							html=html+'<span style="width:80px;color:red;">已结算</span>';
+						}
+					}
+					return html;
+				}		
+			},
+			{field:'order_status',title:'定单状态',width:40,sortable:true,
+				formatter: function(value,row,index){
+					var html='';
+					if (row.order_status){
+						if(row.order_status==1){
+							html=html+'<span style="width:80px;color:blue;">正常</span>';
+						}else if(row.order_status==2){
+							html=html+'<span style="width:80px;color:red;">刷单</span>';
+						}else if(row.order_status==3){
+							html=html+'<span style="width:80px;color:red;">退款</span>';
+						}
+					}
+					return html;
+				}		
+			},
+			{field:'refund_status',title:'功能操作',width:40,sortable:true,
+				formatter: function(value,row,index){
+					var html='';
+					if (row.order_status){
+						if(row.order_status==1){
+							html=html+'<a href="javascript:update_refund_info_order('+row.id+');" class="easyui-linkbutton" style="width:80px;color:blue;">退款处理</a>';
+						}
+					}
+					return html;
+				}		
+			},
 		]]
 	});
 	$("#"+saveBtn).click(function(){
@@ -175,35 +231,171 @@ $(function(){
 		$('#'+addDiv).window('close');
 	});
 	
-	
 });
 
-</script>
+function add_order(){
+	$('#'+auForm).form('clear');
+	$('#'+auForm).form('load',{
+		'data[order_status]':1,
+	});
+	$("#"+addDiv).window('open');
+}
 
-<div>
- 	<div id="search_order" class="easyui-panel" title="搜索面板" style="padding:5px;background:#fafafa;height:80px;" data-options="iconCls:'fa fa-easyui fa-search',collapsible:true">
- 		<table>
-			<tr>
-				<td><div style="width:32px;text-align: right;">行程:</div> </td>
-				<td><select id="search_order_route" class="easyui-combobox" panelHeight="auto" style="width:200px;height:26px;"></select></td>
-				
-				<td><div style="width:32px;text-align: right;">专线:</div> </td>
-				<td><select id="search_order_provider" class="easyui-combobox" panelHeight="auto" style="width:200px;height:26px;"></select></td>
+function edit_order(){
+	var selectedRow=$('#'+tableList).datagrid('getSelected');
+	if(null==selectedRow){
+		$.messager.alert('警告','请先选择一行！','warning');
+	}else{
+		$('#'+auForm).form('load',{
+			'data[id]':selectedRow.id,
+			'data[order_num]':selectedRow.order_num,
+			'data[start_time]':selectedRow.start_time,
+			'data[end_time]':selectedRow.end_time,
+			'data[record_time]':selectedRow.record_time,
+			'data[number]':selectedRow.number,
+			'data[name]':selectedRow.name,
+			'data[mobile]':selectedRow.mobile,
+			'data[number]':selectedRow.number,
+			'data[route_id]':selectedRow.route_id,
+			'data[provider_id]':selectedRow.provider_id,
 			
-				<td><div style="width:32px;text-align: right;">平台:</div> </td>
-				<td><select id="search_order_provider" class="easyui-combobox" panelHeight="auto" style="width:200px;height:26px;"></select></td>
-				
-				<td><div style="width:42px;text-align: right;">关键字:</div> </td>
-				<td><select id="search_order_provider" class="easyui-textbox" panelHeight="auto" style="width:200px;height:26px;"></select></td>
-				
-				<td><a id="btn" href="#" class="easyui-linkbutton" data-options="iconCls:'icon-search'">搜索</a></td>
-				
-			</tr>
-		</table>
-		
-	</div>
-	<table id="tableList_order"></table>
+			'data[sale_price]':selectedRow.sale_price,
+			'data[purchase_price]':selectedRow.purchase_price,
+			'data[pay_price]':selectedRow.pay_price,
+			'data[platform_id]':selectedRow.platform_id,
+			
+			'data[order_status]':selectedRow.order_status,
+			'data[shuadan_price]':selectedRow.shuadan_price,
+			
+			'data[remark]':selectedRow.remark,
+		});
+		$("#"+addDiv).window('open');
+	}
+}
+function remove_order(){
+	var selectedRow=$('#'+tableList).datagrid('getSelected');
+	if(null==selectedRow){
+		$.messager.alert('警告','请先选择一行！','warning');
+	}else{
+		var ids=selectedRow.id;
+		ajaxDelRowsDatagrid('__ROOT__/Admin/Order/uplateIsDetele',ids,tableList);
+	}
+}
+function cancel_select_order(){
+	$('#'+tableList).datagrid('clearSelections'); 
+}
+function reload_order(){
+	$("#"+tableList).datagrid('reload');
+}
+function search_order(){
+	var start_time_01_search_order=$("#start_time_01_search_order").datebox('getValue');
+	var start_time_02_search_order=$("#start_time_02_search_order").datebox('getValue');
+	var order_num_search_order=$("#order_num_search_order").textbox('getValue');
+	var account_status_search_order=$("#account_status_search_order").combobox('getValue');
+	var order_status_search_order=$("#order_status_search_order").combobox('getValue');
+	$('#'+tableList).datagrid('load',{
+		"start_time_01":start_time_01_search_order,
+		"start_time_02":start_time_02_search_order,
+		"order_num":order_num_search_order,
+		"account_status":account_status_search_order,
+		"order_status":order_status_search_order
+	});
+}	
 
+function upload_account_status_order(id){
+	var o={};
+	o['id']=id;
+	var rtr=ajaxReturnRow("__ROOT__/Admin/Order/update_account_status",o);
+	var flag=rtr['flag'];
+	if(flag){
+		$('#'+tableList).datagrid('reload');
+	}
+}
+
+function add_idcard_order(){
+	if($('#idcardForm_order').form('validate')){
+		var o={};
+		o['order_id']=$("#idcard_order_id_order").val();
+		o['name']=$("#idcard_name_order").textbox('getValue');
+		o['card']=$("#idcard_card_order").textbox('getValue');
+		var rtr=ajaxReturnRow("__ROOT__/Admin/IDcard/addOrUpdate",o);
+		var flag=rtr['flag'];
+		if(flag){
+			add_idcard_tr_order(rtr['object'],o['name'],o['card']);
+		}
+	}
+}
+
+function add_idcard_tr_order(id,name,card){
+	$("#idcard_table_order").append('<tr id="idcard-del-control-'+id+'" class="idcard-del-control">'
+								+'<td></td><td>'+name+'</td>'+'<td></td><td>'+card+'</td>'
+								+'<td><a href="javascript:remove_idcard_tr_order('+id+');" class="easyui-linkbutton">删除</a></td>'
+							+'</tr>');
+}
+function remove_idcard_tr_order(id){
+	var o={};
+	o['id']=id;
+	var rtr=ajaxReturnRow("__ROOT__/Admin/IDcard/delRows",o);
+	var flag=rtr['flag'];
+	if(flag){
+		$("#idcard-del-control-"+id).remove();
+	}
+}
+
+
+function update_refund_info_order(id){
+	$('#refundForm_order').form('load',{
+		'data[refund_status_order]':1,
+		'data[id]':id,
+	});
+	$("#refundDiv_order").window('open');
+}
+
+
+$("#refundCancelBtn_order").click(function(){
+	$('#refundDiv_order').window('close');
+});
+
+$("#refundSaveBtn_order").click(function(){
+	ajaxSubmitForm('refundForm_order','__ROOT__/Admin/Order/update_refund_info','refundDiv_order',tableList);
+});
+</script>
+<div id="search_order" style="padding:5px;height:auto">
+	<div style="margin-bottom:5px;float:left;">
+		<a href="javascript:add_order();" class="easyui-linkbutton" iconCls="fa fa-easyui fa-plus-square" plain="true">添加</a>
+		<a href="javascript:edit_order();" class="easyui-linkbutton" iconCls="fa fa-easyui fa-edit" plain="true">修改</a>
+		<a href="javascript:remove_order();" class="easyui-linkbutton" iconCls="fa fa-easyui fa-times" plain="true">删除</a>
+		<a href="javascript:cancel_select_order();" class="easyui-linkbutton" iconCls="fa fa-easyui fa-check-square-o" plain="true">取消选择</a>
+		<a href="javascript:reload_order();" class="easyui-linkbutton" iconCls="fa fa-easyui fa-retweet" plain="true">重载数据</a>
+	</div>
+	<div style="float:right;">
+		<a href="javascript:reload_order();" class="easyui-linkbutton" iconCls="fa fa-easyui fa-retweet" plain="true">根据搜索条件结算</a>
+		<a href="javascript:reload_order();" class="easyui-linkbutton" iconCls="fa fa-easyui fa-retweet" plain="true">根据搜索条件统计</a>
+	</div>
+	<div style="clear:both;"></div>
+	<hr/>
+	<div>
+		<span>出发日期 从:</span><input id="start_time_01_search_order" class="easyui-datebox" style="width:120px" />
+		<span>到:</span><input id="start_time_02_search_order" class="easyui-datebox" style="width:120px" />
+		<span>定单编号:</span><input id="order_num_search_order" class="easyui-textbox" style="width:120px" />
+		<span>结算状态:</span>
+			<select id="account_status_search_order" style="width:120px" class="easyui-combobox">
+				<option value="">全部</option>
+				<option value="1">未结算</option>
+				<option value="2">已结算</option>
+			</select>
+		<span>定单状态:</span>
+			<select id="order_status_search_order" style="width:120px" class="easyui-combobox">
+				<option value="">全部</option>
+				<option value="1">正常</option>
+				<option value="2">刷单</option>
+				<option value="3">退款</option>
+			</select>
+		<a href="javascript:search_order();" class="easyui-linkbutton" iconCls="icon-search">搜索</a>
+	</div>
+</div>
+<div>
+	<table id="tableList_order"></table>
 </div>
 <div id="addDiv_order" class="easyui-window" title="添加" data-options="iconCls:'fa fa-dot-circle-o',closed:true" style="width:700px;height:600px;padding:5px;">
 	<div class="easyui-layout" data-options="fit:true">
@@ -211,6 +403,11 @@ $(function(){
 			<form id="addForm_order" class="easyui-form" method="post" data-options="novalidate:true">
 				<input name="data[id]" type="hidden" />
 		    	<table cellpadding="5">
+		    		<tr>   			
+		    			<td><div style="width:62px;text-align: right;">定单号:</div></td>
+		    			<td colspan="3"><input class="easyui-textbox" name="data[order_num]" data-options="required:true" style="width:546px;height:30px;" type="text"></input></td>	
+		    			
+		    		</tr>
 		    		<tr>   			
 		    			<td><div style="width:62px;text-align: right;">出发:</div></td>
 		    			<td><input class="easyui-datebox" name="data[start_time]" data-options="required:true" style="width:230px;height:30px;" type="text"></input></td>	
@@ -232,7 +429,7 @@ $(function(){
 		    			<td><div style="width:62px;text-align: right;">手机:</div></td>
 		    			<td><input class="easyui-textbox" name="data[mobile]" data-options="required:true" style="width:230px;height:30px;" type="text"></input></td>		    			
 		    		</tr>
-		    		<tr>
+		    		<!-- <tr>
 		    			<td><div style="width:62px;text-align: right;"></div></td>
 		    			<td colspan="3">
 		    				<div><a id="add_idcard_route" href="javascript:add_idcard_route();" class="easyui-linkbutton"><i class="fa fa-plus-square-o fa-lg"></i>添加身份信息</a></div>
@@ -240,7 +437,7 @@ $(function(){
 		    					
 		    				</div>
 		    			</td>				
-		    		</tr>
+		    		</tr> -->
 		    		<tr>
 		    			<td><div style="width:62px;text-align: right;">行程:</div> </td>
 						<td><select id="form_route_route" name="data[route_id]" class="easyui-combobox" panelHeight="auto" style="width:230px;height:26px;"></select></td>
@@ -261,6 +458,18 @@ $(function(){
 		    		
 		    			<td><div style="width:62px;text-align: right;">平台:</div> </td>
 						<td><select id="form_route_platform" name="data[platform_id]" class="easyui-combobox" panelHeight="auto" style="width:230px;height:26px;"></select></td>	    									
+		    		</tr>
+		    		<tr>
+		    			<td><div style="width:62px;text-align: right;">定单状态:</div> </td>
+						<td>
+							<select id="form_route_order_status" name="data[order_status]" class="easyui-combobox" data-options="editable:false" style="width:230px;height:26px;">
+								<option value="1">正常</option>
+								<option value="2">刷单</option>
+							</select>
+						</td>	    									
+		    		
+						<td><div style="width:62px;text-align: right;">刷单佣金:</div> </td>
+						<td><input class="easyui-numberbox" id="shuadan_price_route" name="data[shuadan_price]" data-options="precision:2" style="width:230px;height:30px;" type="text"></input></td>    					    			
 		    		</tr>
 		    		<tr>
 						<td><div style="width:62px;text-align: right;"></div> </td>
@@ -287,6 +496,61 @@ $(function(){
 	</div>
 </div>
 
+<div id="idcardDiv_order" class="easyui-window" title="添加定单身份信息" data-options="iconCls:'fa fa-dot-circle-o',closed:true" style="width:700px;height:600px;padding:5px;">
+	<div class="easyui-layout" data-options="fit:true">
+		<div data-options="region:'center',border:true">
+			<form id="idcardForm_order" class="easyui-form" method="post" data-options="novalidate:true">
+				<input id="idcard_order_id_order" type="hidden" />
+		    	<table id="idcard_table_order" cellpadding="5">
+		    		<tr>   			
+		    			<td><div style="width:62px;text-align: right;">姓名:</div></td>
+		    			<td><input class="easyui-textbox" id="idcard_name_order" data-options="required:true" style="width:200px;height:30px;" type="text"></input></td>	
+		    			<td><div style="width:62px;text-align: right;">身份证号:</div></td>
+		    			<td><input class="easyui-textbox" id="idcard_card_order" data-options="required:true" style="width:200px;height:30px;" type="text"></input></td>
+		    			<td><a href="javascript:add_idcard_order();" class="easyui-linkbutton" data-options="iconCls:'icon-add'">添加</a></td>
+		    		</tr>
+		    	</table>
+		    </form>
+		</div>
+	</div>
+</div>
+
+<div id="refundDiv_order" class="easyui-window" title="定单退款处理面板" data-options="iconCls:'fa fa-dot-circle-o',closed:true" style="width:700px;height:600px;padding:5px;">
+	<div class="easyui-layout" data-options="fit:true">
+		<div data-options="region:'center',border:true">
+			<form id="refundForm_order" class="easyui-form" method="post" data-options="novalidate:true">
+				<input id="refund_order_id_order" name="data[id]" type="hidden" />
+		    	<table id="refund_table_order" cellpadding="5">
+		    		<tr>
+		    			<td><div style="width:62px;text-align: right;">退款金额:</div> </td>
+						<td><input class="easyui-numberbox" name="data[refund_customer_price]" data-options="required:true,min:0,precision:2" style="width:230px;height:30px;" type="text"></input></td>
+						
+						<td><div style="width:62px;text-align: right;">损失金额:</div> </td>
+						<td><input class="easyui-numberbox" name="data[refund_provider_price]" data-options="required:true,min:0,precision:2" style="width:230px;height:30px;" type="text"></input></td>    			
+		    		</tr>
+		    		<tr>
+		    			<td><div style="width:62px;text-align: right;">退款方式:</div> </td>
+						<td>
+							<select id="refund_status_order" name="data[refund_status]" class="easyui-combobox" data-options="editable:false" style="width:230px;height:30px;">
+								<option value="1">线上退款</option>
+								<option value="2">线下退款</option>
+							</select>
+						</td>	    	
+		    		</tr>
+		    		<tr>
+		    			<td><div style="width:62px;text-align: right;">退款原因:</div></td>
+		    			<td colspan="3"><input class="easyui-textbox" name="data[refund_remark]" data-options="multiline:true," style="height:100px;width:550px;"></input></td>
+		    		</tr>
+		    	</table>
+		    </form>
+		</div>
+		<div data-options="region:'south',border:false" style="text-align:right;padding:5px 0 0;">
+			<a id="refundSaveBtn_order" class="easyui-linkbutton" data-options="iconCls:'fa fa-easyui fa-check'" href="javascript:void(0)" style="width:80px">保存</a>
+			<a id="refundCancelBtn_order" class="easyui-linkbutton" data-options="iconCls:'fa fa-easyui fa-times'" href="javascript:void(0)" style="width:80px">取消</a>
+		</div>
+	</div>
+</div>
+
 <script>
 
 function add_idcard_route(){
@@ -302,14 +566,25 @@ function count_profit_route(){
 	var rtr=ajaxReturnRow("__ROOT__/Admin/Platform/getTax",o);
 	var tax=rtr['tax'];
 	if(sale_price!=""&&purchase_price!=""&&tax!=null){
-
 		if($("#pay_price_route").numberbox('getValue')==null||$("#pay_price_route").numberbox('getValue')==""){
 			var pay_price=0;
 		}else{
 			var pay_price=parseFloat($("#pay_price_route").numberbox('getValue'));
 		}
 		
-		var count=(sale_price-(purchase_price))*((100-tax)/100)+pay_price;
+		if($("#pay_price_route").numberbox('getValue')==null||$("#pay_price_route").numberbox('getValue')==""){
+			var pay_price=0;
+		}else{
+			var pay_price=parseFloat($("#pay_price_route").numberbox('getValue'));
+		}
+		
+		if($("#shuadan_price_route").numberbox('getValue')==null||$("#shuadan_price_route").numberbox('getValue')==""){
+			var shuadan_price=0;
+		}else{
+			var shuadan_price=parseFloat($("#shuadan_price_route").numberbox('getValue'));
+		}
+		
+		var count=sale_price-purchase_price-sale_price*(tax/100)+pay_price-shuadan_price;
 		$("#display_profit_route").text(count);
 		
 	}else{
