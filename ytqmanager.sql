@@ -4,13 +4,13 @@ Navicat MySQL Data Transfer
 Source Server         : localhost
 Source Server Version : 50617
 Source Host           : localhost:3306
-Source Database       : taoyongjin
+Source Database       : ytqmanager
 
 Target Server Type    : MYSQL
 Target Server Version : 50617
 File Encoding         : 65001
 
-Date: 2017-01-22 12:42:06
+Date: 2017-01-24 11:13:56
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -104,8 +104,49 @@ INSERT INTO `bbb_access` VALUES ('1', '150', '0', '0', '0');
 INSERT INTO `bbb_access` VALUES ('1', '151', '0', '0', '0');
 INSERT INTO `bbb_access` VALUES ('1', '152', '0', '0', '0');
 INSERT INTO `bbb_access` VALUES ('1', '153', '0', '0', '0');
+INSERT INTO `bbb_access` VALUES ('1', '154', '0', '0', '0');
+INSERT INTO `bbb_access` VALUES ('1', '155', '0', '0', '0');
+INSERT INTO `bbb_access` VALUES ('1', '156', '0', '0', '0');
+INSERT INTO `bbb_access` VALUES ('1', '157', '0', '0', '0');
+INSERT INTO `bbb_access` VALUES ('1', '158', '0', '0', '0');
+INSERT INTO `bbb_access` VALUES ('1', '159', '0', '0', '0');
 INSERT INTO `bbb_access` VALUES ('1', '160', '0', '0', '0');
 INSERT INTO `bbb_access` VALUES ('1', '161', '0', '0', '0');
+INSERT INTO `bbb_access` VALUES ('1', '162', '0', '0', '0');
+INSERT INTO `bbb_access` VALUES ('1', '163', '0', '0', '0');
+INSERT INTO `bbb_access` VALUES ('1', '164', '0', '0', '0');
+INSERT INTO `bbb_access` VALUES ('1', '165', '0', '0', '0');
+INSERT INTO `bbb_access` VALUES ('1', '166', '0', '0', '0');
+INSERT INTO `bbb_access` VALUES ('1', '167', '0', '0', '0');
+INSERT INTO `bbb_access` VALUES ('1', '168', '0', '0', '0');
+INSERT INTO `bbb_access` VALUES ('1', '169', '0', '0', '0');
+INSERT INTO `bbb_access` VALUES ('1', '170', '0', '0', '0');
+INSERT INTO `bbb_access` VALUES ('1', '171', '0', '0', '0');
+INSERT INTO `bbb_access` VALUES ('1', '172', '0', '0', '0');
+INSERT INTO `bbb_access` VALUES ('1', '173', '0', '0', '0');
+INSERT INTO `bbb_access` VALUES ('1', '174', '0', '0', '0');
+INSERT INTO `bbb_access` VALUES ('1', '175', '0', '0', '0');
+INSERT INTO `bbb_access` VALUES ('1', '176', '0', '0', '0');
+INSERT INTO `bbb_access` VALUES ('1', '177', '0', '0', '0');
+INSERT INTO `bbb_access` VALUES ('1', '178', '0', '0', '0');
+INSERT INTO `bbb_access` VALUES ('1', '179', '0', '0', '0');
+INSERT INTO `bbb_access` VALUES ('1', '180', '0', '0', '0');
+INSERT INTO `bbb_access` VALUES ('1', '181', '0', '0', '0');
+INSERT INTO `bbb_access` VALUES ('1', '182', '0', '0', '0');
+INSERT INTO `bbb_access` VALUES ('1', '183', '0', '0', '0');
+INSERT INTO `bbb_access` VALUES ('1', '184', '0', '0', '0');
+INSERT INTO `bbb_access` VALUES ('1', '185', '0', '0', '0');
+INSERT INTO `bbb_access` VALUES ('1', '186', '0', '0', '0');
+INSERT INTO `bbb_access` VALUES ('1', '187', '0', '0', '0');
+INSERT INTO `bbb_access` VALUES ('1', '188', '0', '0', '0');
+INSERT INTO `bbb_access` VALUES ('1', '189', '0', '0', '0');
+INSERT INTO `bbb_access` VALUES ('1', '190', '0', '0', '0');
+INSERT INTO `bbb_access` VALUES ('1', '191', '0', '0', '0');
+INSERT INTO `bbb_access` VALUES ('1', '192', '0', '0', '0');
+INSERT INTO `bbb_access` VALUES ('1', '193', '0', '0', '0');
+INSERT INTO `bbb_access` VALUES ('1', '194', '0', '0', '0');
+INSERT INTO `bbb_access` VALUES ('1', '195', '0', '0', '0');
+INSERT INTO `bbb_access` VALUES ('1', '196', '0', '0', '0');
 
 -- ----------------------------
 -- Table structure for bbb_attachment
@@ -3682,6 +3723,24 @@ INSERT INTO `bbb_district` VALUES ('3143', '31', '342', '图木舒克市', '6590
 INSERT INTO `bbb_district` VALUES ('3144', '31', '342', '五家渠市', '659004', '659000', null, null, null);
 
 -- ----------------------------
+-- Table structure for bbb_idcard
+-- ----------------------------
+DROP TABLE IF EXISTS `bbb_idcard`;
+CREATE TABLE `bbb_idcard` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `name` varchar(20) DEFAULT NULL,
+  `card` varchar(20) DEFAULT NULL,
+  `order_id` bigint(20) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of bbb_idcard
+-- ----------------------------
+INSERT INTO `bbb_idcard` VALUES ('1', '罗章友', '511524199202075271', '2');
+INSERT INTO `bbb_idcard` VALUES ('16', '罗章友', '511524199202075271', '1');
+
+-- ----------------------------
 -- Table structure for bbb_message
 -- ----------------------------
 DROP TABLE IF EXISTS `bbb_message`;
@@ -3722,7 +3781,7 @@ CREATE TABLE `bbb_node` (
   KEY `pid` (`pid`),
   KEY `status` (`status`),
   KEY `name` (`name`)
-) ENGINE=InnoDB AUTO_INCREMENT=162 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=197 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of bbb_node
@@ -3795,10 +3854,6 @@ INSERT INTO `bbb_node` VALUES ('76', 'delRows', '删除', '1', '删除', '50', '
 INSERT INTO `bbb_node` VALUES ('86', 'provinceTree', '获取区域树', '1', '获取区域树', '50', '54', '3', '0', '0');
 INSERT INTO `bbb_node` VALUES ('87', 'serviceDistrict', '业务分区', '1', '业务分区管理', '50', '51', '3', '1', '0');
 INSERT INTO `bbb_node` VALUES ('92', 'getDistrictByCityId', '根据城市ID获取区域', '1', '根据城市ID获取区域', '50', '61', '3', '0', '0');
-INSERT INTO `bbb_node` VALUES ('101', 'Customer', '用户管理', '1', '用户管理', '50', '1', '2', '0', '0');
-INSERT INTO `bbb_node` VALUES ('102', 'addOrUpdate', '增加或更新', '1', '增加或更新', '50', '101', '3', '0', '0');
-INSERT INTO `bbb_node` VALUES ('103', 'pageList', '分页列表', '1', '分页列表', '50', '101', '3', '0', '0');
-INSERT INTO `bbb_node` VALUES ('104', 'delRows', '删除', '1', '删除', '50', '101', '3', '0', '0');
 INSERT INTO `bbb_node` VALUES ('121', 'getParent', '获取父级结点', '1', '获取父级结点', '50', '10', '3', '0', '0');
 INSERT INTO `bbb_node` VALUES ('122', 'serviceSetDistrict', '设置业务分区', '1', '批量设置固定价格的业务分区', '50', '51', '3', '0', '0');
 INSERT INTO `bbb_node` VALUES ('125', 'clearCache', '清除全局缓存', '1', '清除全局缓存', '50', '2', '3', '0', '0');
@@ -3816,6 +3871,41 @@ INSERT INTO `bbb_node` VALUES ('158', 'getAll', '获取所有', '1', '获取所�
 INSERT INTO `bbb_node` VALUES ('159', 'updateStatus', '标记已读', '1', '标记已读', '50', '154', '3', '0', '0');
 INSERT INTO `bbb_node` VALUES ('160', 'password', '修改密码', '1', '修改密码', '50', '2', '3', '0', '0');
 INSERT INTO `bbb_node` VALUES ('161', 'updatePassword', '修改密码功能', '1', '修改密码功能', '50', '27', '3', '0', '0');
+INSERT INTO `bbb_node` VALUES ('162', 'OrderMenu', '订单管理菜单', '1', '订单管理菜单', '50', '1', '2', '1', '0');
+INSERT INTO `bbb_node` VALUES ('163', 'route', '行程管理', '1', '行程管理', '50', '162', '3', '1', '0');
+INSERT INTO `bbb_node` VALUES ('164', 'platform', '平台管理', '1', '平台管理', '50', '162', '3', '1', '0');
+INSERT INTO `bbb_node` VALUES ('165', 'provider', '专线管理', '1', '专线管理', '50', '162', '3', '1', '0');
+INSERT INTO `bbb_node` VALUES ('166', 'Route', '行程管理', '1', '行程管理', '50', '1', '2', '0', '0');
+INSERT INTO `bbb_node` VALUES ('167', 'addOrUpdate', '增加或更新', '1', '增加或更新', '50', '166', '3', '0', '0');
+INSERT INTO `bbb_node` VALUES ('168', 'pageList', '分页列表', '1', '分页列表', '50', '166', '3', '0', '0');
+INSERT INTO `bbb_node` VALUES ('169', 'delRows', '删除', '1', '删除', '50', '166', '3', '0', '0');
+INSERT INTO `bbb_node` VALUES ('170', 'getAll', '获取所有', '1', '获取所有', '50', '166', '3', '0', '0');
+INSERT INTO `bbb_node` VALUES ('171', 'Provider', '专线管理', '1', '专线管理', '50', '1', '2', '0', '0');
+INSERT INTO `bbb_node` VALUES ('172', 'addOrUpdate', '增加或更新', '1', '增加或更新', '50', '171', '3', '0', '0');
+INSERT INTO `bbb_node` VALUES ('173', 'pageList', '分页列表', '1', '分页列表', '50', '171', '3', '0', '0');
+INSERT INTO `bbb_node` VALUES ('174', 'delRows', '删除', '1', '删除', '50', '171', '3', '0', '0');
+INSERT INTO `bbb_node` VALUES ('175', 'getAll', '获取所有', '1', '获取所有', '50', '171', '3', '0', '0');
+INSERT INTO `bbb_node` VALUES ('176', 'Platform', '平台管理', '1', '平台管理', '50', '1', '2', '0', '0');
+INSERT INTO `bbb_node` VALUES ('177', 'addOrUpdate', '增加或更新', '1', '增加或更新', '50', '176', '3', '0', '0');
+INSERT INTO `bbb_node` VALUES ('178', 'pageList', '分页列表', '1', '分页列表', '50', '176', '3', '0', '0');
+INSERT INTO `bbb_node` VALUES ('179', 'delRows', '删除', '1', '删除', '50', '176', '3', '0', '0');
+INSERT INTO `bbb_node` VALUES ('180', 'getAll', '获取所有', '1', '获取所有', '50', '176', '3', '0', '0');
+INSERT INTO `bbb_node` VALUES ('181', 'order', '订单管理', '1', '订单管理', '50', '162', '3', '1', '0');
+INSERT INTO `bbb_node` VALUES ('182', 'Order', '订单管理', '1', '订单管理', '50', '1', '2', '0', '0');
+INSERT INTO `bbb_node` VALUES ('183', 'addOrUpdate', '增加或更新', '1', '增加或更新', '50', '182', '3', '0', '0');
+INSERT INTO `bbb_node` VALUES ('184', 'pageList', '分页列表', '1', '分页列表', '50', '182', '3', '0', '0');
+INSERT INTO `bbb_node` VALUES ('185', 'delRows', '删除', '1', '删除', '50', '182', '3', '0', '0');
+INSERT INTO `bbb_node` VALUES ('186', 'getAll', '获取所有', '1', '获取所有', '50', '182', '3', '0', '0');
+INSERT INTO `bbb_node` VALUES ('187', 'getTax', '异步获取税率', '1', '异步获取税率', '50', '176', '3', '0', '0');
+INSERT INTO `bbb_node` VALUES ('188', 'update_account_status', '更新结算状态', '1', '更新结算状态', '50', '182', '3', '0', '0');
+INSERT INTO `bbb_node` VALUES ('189', 'IDcard', '身份证管理', '1', '身份证管理', '50', '1', '2', '0', '0');
+INSERT INTO `bbb_node` VALUES ('190', 'addOrUpdate', '增加或更新', '1', '增加或更新', '50', '189', '3', '0', '0');
+INSERT INTO `bbb_node` VALUES ('191', 'delRows', '删除', '1', '删除', '50', '189', '3', '0', '0');
+INSERT INTO `bbb_node` VALUES ('192', 'getAll', '获取所有', '1', '获取所有', '50', '189', '3', '0', '0');
+INSERT INTO `bbb_node` VALUES ('193', 'pageList', '分页列表', '1', '分页列表', '50', '189', '3', '0', '0');
+INSERT INTO `bbb_node` VALUES ('194', 'getAllByOrderId', '取定单身份证', '1', '取定单身份证', '50', '189', '3', '0', '0');
+INSERT INTO `bbb_node` VALUES ('195', 'update_refund_info', '退款处理', '1', '退款处理', '50', '182', '3', '0', '0');
+INSERT INTO `bbb_node` VALUES ('196', 'uplateIsDetele', '假删除', '1', '假删除', '50', '182', '3', '0', '0');
 
 -- ----------------------------
 -- Table structure for bbb_option
@@ -3835,6 +3925,95 @@ CREATE TABLE `bbb_option` (
 -- Records of bbb_option
 -- ----------------------------
 INSERT INTO `bbb_option` VALUES ('1', '网站域名', 'www.wpsites.com', '类型字段', '网站的首页域名', 'site_url');
+
+-- ----------------------------
+-- Table structure for bbb_order
+-- ----------------------------
+DROP TABLE IF EXISTS `bbb_order`;
+CREATE TABLE `bbb_order` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `order_num` varchar(80) DEFAULT NULL,
+  `record_time` date DEFAULT NULL,
+  `start_time` date DEFAULT NULL,
+  `name` varchar(20) DEFAULT NULL,
+  `number` int(11) DEFAULT NULL,
+  `mobile` varchar(11) DEFAULT NULL,
+  `route_id` bigint(20) DEFAULT NULL,
+  `route_name` varchar(80) DEFAULT NULL,
+  `end_time` date DEFAULT NULL,
+  `provider_id` bigint(20) DEFAULT NULL,
+  `provider_name` varchar(80) DEFAULT NULL,
+  `sale_price` double DEFAULT NULL,
+  `purchase_price` double DEFAULT NULL,
+  `pay_price` double DEFAULT NULL,
+  `profit_price` double DEFAULT NULL,
+  `platform_id` bigint(20) DEFAULT NULL,
+  `platform_name` varchar(80) DEFAULT NULL,
+  `account_status` varchar(1) DEFAULT NULL COMMENT '帐目结算 1，未结算  2，结算',
+  `order_status` varchar(1) DEFAULT NULL COMMENT '1、正常 2、刷单  3、退款 ',
+  `shuadan_price` double DEFAULT NULL,
+  `refund_status` varchar(1) DEFAULT NULL COMMENT '1、线上退款  2、线下退款',
+  `refund_customer_price` double DEFAULT NULL,
+  `refund_provider_price` double DEFAULT NULL,
+  `refund_remark` varchar(255) DEFAULT NULL,
+  `remark` varchar(255) DEFAULT NULL,
+  `create_time` int(10) DEFAULT NULL,
+  `update_time` int(10) DEFAULT NULL,
+  `create_user` bigint(20) DEFAULT NULL,
+  `update_user` bigint(20) DEFAULT NULL,
+  `is_delete` varchar(1) DEFAULT '0',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of bbb_order
+-- ----------------------------
+INSERT INTO `bbb_order` VALUES ('1', '22222222222222', '2017-01-22', '2017-01-22', '罗章友', '2', '13890901407', '1', null, '2017-01-25', '4', null, '70', '42', '0', '24.5', '3', null, '1', '3', '0', '1', '70', '0', '卖家不想去了', '备注点内容', '1485078195', '1485181929', '1', '1', '0');
+INSERT INTO `bbb_order` VALUES ('2', '11111111111111', '2017-01-20', '2017-01-23', '黄少华', '2', '13554699175', '4', null, '2017-01-24', '2', null, '218', '150', '0', '57.1', '2', null, '2', '1', '0', null, null, null, null, '备注点内容', '1485095816', '1485181236', '1', '1', '0');
+
+-- ----------------------------
+-- Table structure for bbb_platform
+-- ----------------------------
+DROP TABLE IF EXISTS `bbb_platform`;
+CREATE TABLE `bbb_platform` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `name` varchar(80) DEFAULT NULL,
+  `tax` double DEFAULT NULL,
+  `store_name` varchar(80) DEFAULT NULL,
+  `create_time` int(10) DEFAULT NULL,
+  `update_time` int(10) DEFAULT NULL,
+  `create_user` bigint(20) DEFAULT NULL,
+  `update_user` bigint(20) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of bbb_platform
+-- ----------------------------
+INSERT INTO `bbb_platform` VALUES ('2', '美团', '5', '游Ta去', '1485065108', '1485095236', '1', '1');
+INSERT INTO `bbb_platform` VALUES ('3', '美团', '5', '中港国旅', '1485095230', null, '1', null);
+
+-- ----------------------------
+-- Table structure for bbb_provider
+-- ----------------------------
+DROP TABLE IF EXISTS `bbb_provider`;
+CREATE TABLE `bbb_provider` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `name` varchar(80) DEFAULT NULL,
+  `remark` varchar(255) DEFAULT NULL,
+  `create_time` int(10) DEFAULT NULL,
+  `update_time` int(10) DEFAULT NULL,
+  `create_user` bigint(20) DEFAULT NULL,
+  `update_user` bigint(20) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of bbb_provider
+-- ----------------------------
+INSERT INTO `bbb_provider` VALUES ('2', '鑫辉德天', '鑫辉德天', '1485064630', null, '1', null);
+INSERT INTO `bbb_provider` VALUES ('3', '昆明康辉陈亮', '昆明康辉陈亮', '1485064672', null, '1', null);
+INSERT INTO `bbb_provider` VALUES ('4', '拉市海舒航', '拉市海舒航', '1485064680', null, '1', null);
 
 -- ----------------------------
 -- Table structure for bbb_province
@@ -3930,6 +4109,34 @@ CREATE TABLE `bbb_role_user` (
 -- Records of bbb_role_user
 -- ----------------------------
 INSERT INTO `bbb_role_user` VALUES ('1', '1');
+INSERT INTO `bbb_role_user` VALUES ('1', '2');
+
+-- ----------------------------
+-- Table structure for bbb_route
+-- ----------------------------
+DROP TABLE IF EXISTS `bbb_route`;
+CREATE TABLE `bbb_route` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `name` varchar(80) DEFAULT NULL,
+  `remark` varchar(255) DEFAULT NULL,
+  `create_time` int(10) DEFAULT NULL,
+  `update_time` int(10) DEFAULT NULL,
+  `create_user` bigint(20) DEFAULT NULL,
+  `update_user` bigint(20) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of bbb_route
+-- ----------------------------
+INSERT INTO `bbb_route` VALUES ('1', '拉市海', '拉市海一日游', '1485063640', '1485063693', '1', '1');
+INSERT INTO `bbb_route` VALUES ('2', '德天纯玩', '德天纯玩', '1485063717', null, '1', null);
+INSERT INTO `bbb_route` VALUES ('3', '石林+九乡+七彩', '石林+九乡+七彩', '1485063729', null, '1', null);
+INSERT INTO `bbb_route` VALUES ('4', '德天常规', '石林+九乡+七彩', '1485063749', null, '1', null);
+INSERT INTO `bbb_route` VALUES ('5', '乐山1日', '乐山1日', '1485063767', null, '1', null);
+INSERT INTO `bbb_route` VALUES ('6', '九乡+七彩', '九乡+七彩', '1485063775', null, '1', null);
+INSERT INTO `bbb_route` VALUES ('7', '五台山（含餐）', '五台山（含餐）', '1485063784', null, '1', null);
+INSERT INTO `bbb_route` VALUES ('8', '故宫+万寿寺+颐和园', '故宫+万寿寺+颐和园', '1485063799', null, '1', null);
 
 -- ----------------------------
 -- Table structure for bbb_user
@@ -3958,9 +4165,10 @@ CREATE TABLE `bbb_user` (
   `create_user` bigint(20) DEFAULT NULL,
   `update_user` bigint(20) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of bbb_user
 -- ----------------------------
 INSERT INTO `bbb_user` VALUES ('1', 'admin', '21232f297a57a5a743894a0e4a801fc3', null, '超级管理员', null, null, null, null, null, null, '1', '1', '超级管理员', '0', null, '0', null, '1458282079', null, null);
+INSERT INTO `bbb_user` VALUES ('2', 'zhouting', '5f3aad50719bc73b2082af4d77aa8e40', null, '周婷', null, null, null, null, null, null, '1', '0', '二级管理员', '0', null, '0', '1485162952', null, null, null);
