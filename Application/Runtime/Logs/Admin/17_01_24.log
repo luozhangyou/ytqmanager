@@ -1058,3 +1058,6 @@ SQL: SHOW COLUMNS FROM `bbb_node` [ RunTime:0.0100s ]
 SQL: SELECT `id`,title as text FROM `bbb_node` WHERE `level` = 1  [ RunTime:0.0004s ]
 SQL: SELECT `id`,title as text FROM `bbb_node` WHERE `level` = 2 AND `pid` = 1  [ RunTime:0.0007s ]
 
+[ 2017-01-24T11:27:57+08:00 ] ::1 /ytqmanager/Admin/Index/index
+ERR: SQLSTATE[HY000] [1045] Accès refusé pour l'utilisateur: 'root'@'@localhost' (mot de passe: OUI)
+

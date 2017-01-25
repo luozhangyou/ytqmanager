@@ -3,7 +3,7 @@ return array(
 	//'配置项'=>'配置值'
 	'TMPL_TEMPLATE_SUFFIX'  =>  '.htm',// 默认模板文件后缀
 	'URL_CASE_INSENSITIVE' => true,//忽略大小写
-    'SHOW_PAGE_TRACE' =>true,
+    'SHOW_PAGE_TRACE' =>false,
     'DB_FIELD_CACHE'=>false,
     'HTML_CACHE_ON'=>false,
     'MULTI_MODULE' =>  true,

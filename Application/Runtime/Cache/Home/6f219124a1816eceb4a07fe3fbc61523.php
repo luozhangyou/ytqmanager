@@ -1,10 +1,25 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<?php if (!defined('THINK_PATH')) exit();?><!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>后台管理登录</title>
-<include file="Public/login_header" />
-<load href="__PUBLIC__/Home/theme/default/css/login.css" />
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no" /> 
+<title>js+css</title>
+
+<link rel="stylesheet" type="text/css" href="/ytqmanager/Public/Home/widget/bootstrap-3.3.5-dist/css/bootstrap.min.css" />
+
+<script type="text/javascript" src="/ytqmanager/Public/Home/theme/default/js/jquery.min.js"></script>
+<script type="text/javascript" src="/ytqmanager/Public/Home/theme/default/js/jquery.ajax.js"></script>
+</head>
+<body>
+	
+</body>
+</html>
+<link rel="stylesheet" type="text/css" href="/ytqmanager/Public/Home/theme/default/css/login.css" />
 <style type="text/css">
 .shadow-box{
 	background: #FFF none repeat scroll 0% 0%;
@@ -12,7 +27,7 @@
 	box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.25);
 }
 body{
-	background: url("__PUBLIC__/Admin/theme/defalut/image/loginBg.png") no-repeat;
+	background: url("/ytqmanager/Public/Admin/theme/defalut/image/loginBg.png") no-repeat;
 	-moz-background-size:100% 100%; 
 	background-size:100% 100%;	
 }
@@ -24,7 +39,7 @@ body{
 </head>
 <body>
 	<div class="loginBg">
-	    <form id="loginForm" class="container " action="__ROOT__/Home/Login/login" method="POST" >
+	    <form id="loginForm" class="container " action="/ytqmanager/Home/Login/login" method="POST" >
 	      <div class="form-signin shadow-box">
 	        <h2 class="form-signin-heading">后台登录</h2>
 	        <div class="form-group">
@@ -54,9 +69,9 @@ body{
     <script type="text/javascript">
     	$(document).ready(function(){
     		//获取验证码图片
-    		$("#checkeImg").attr("src","__ROOT__/Home/Login/getVerify"+'/'+Math.random());
+    		$("#checkeImg").attr("src","/ytqmanager/Home/Login/getVerify"+'/'+Math.random());
     		$("#checkeImg").click(function(){
-    			$("#checkeImg").attr("src","__ROOT__/Home/Login/getVerify"+'/'+Math.random());//
+    			$("#checkeImg").attr("src","/ytqmanager/Home/Login/getVerify"+'/'+Math.random());//
     		});
     	});
     </script>
