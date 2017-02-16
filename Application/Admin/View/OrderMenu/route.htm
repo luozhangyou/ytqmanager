@@ -62,6 +62,7 @@ $(function(){
 					$('#'+auForm).form('load',{
 						'data[id]':selectedRow.id,
 						'data[name]':selectedRow.name,
+						'data[type]':selectedRow.type,
 						'data[remark]':selectedRow.remark,
 					});
 					$("#"+addDiv).window('open');
@@ -97,9 +98,24 @@ $(function(){
 		]],
 		columns:[[  
 			{field:'name',title:'名称',width:40,sortable:true},
+			
+			{field:'type',title:'类型',width:40,sortable:true,
+				formatter: function(value,row,index){
+					if (value=="1"){
+						return "短线";
+					} else if(value=="2"){
+						return "长线";
+					}else if(value=="3"){
+						return "门票";
+					}else{
+						return "异常";
+					}
+				}	
+			},
+			
 			{field:'remark',title:'备注',width:40,sortable:true},
 			
-			{field:'create_user',title:'创建人',width:40,sortable:true,
+			{field:'create_user',title:'创建人',width:20,sortable:true,
 				formatter: function(value,row,index){
 					if (row.createUser){
 						return row.createUser.nickname;
@@ -109,8 +125,8 @@ $(function(){
 				}	
 			},
 			
-			{field:'create_time',title:'创建时间',width:40,sortable:true,formatter:formatDatebox},
-			{field:'update_user',title:'修改人',width:40,sortable:true,
+			{field:'create_time',title:'创建时间',width:30,sortable:true,formatter:formatDatebox},
+			{field:'update_user',title:'修改人',width:20,sortable:true,
 				formatter: function(value,row,index){
 					if (row.updateUser){
 						return row.updateUser.nickname;
@@ -119,7 +135,7 @@ $(function(){
 					}
 				}		
 			},
-			{field:'update_time',title:'修改时间',width:40,sortable:true,formatter:formatDatebox},
+			{field:'update_time',title:'修改时间',width:30,sortable:true,formatter:formatDatebox},
 		]]
 	});
 	$("#"+saveBtn).click(function(){
@@ -145,6 +161,19 @@ $(function(){
 		    		<tr>
 		    			<td><div style="width:62px;text-align: right;">名称:</div></td>
 		    			<td><input class="easyui-textbox" name="data[name]" data-options="required:true" style="width:455px;height:30px;" type="text"></input></td>		    			
+		    		</tr>
+		    		
+		    		<tr>
+		    			<td><div style="text-align: right;" >类型:</div></td>
+		    			<td>
+
+				    		<select style="width:230px;height:30px;" name="data[type]"  data-options="required:true" class="easyui-combobox">
+								<option value="1">短线</option>
+								<option value="2">长线</option>
+								<option value="3">门票</option>
+							</select>
+							
+						</td>		    			
 		    		</tr>
 		    		<tr>
 		    			<td><div style="width:62px;text-align: right;">内容:</div></td>

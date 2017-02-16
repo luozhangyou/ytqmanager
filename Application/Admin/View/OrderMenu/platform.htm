@@ -62,7 +62,9 @@ $(function(){
 					$('#'+auForm).form('load',{
 						'data[id]':selectedRow.id,
 						'data[name]':selectedRow.name,
-						'data[tax]':selectedRow.tax,
+						'data[ticket_tax]':selectedRow.ticket_tax,
+						'data[short_tax]':selectedRow.short_tax,
+						'data[long_tax]':selectedRow.long_tax,
 						'data[store_name]':selectedRow.store_name,
 					});
 					$("#"+addDiv).window('open');
@@ -98,10 +100,12 @@ $(function(){
 		]],
 		columns:[[  
 			{field:'name',title:'平台名称',width:40,sortable:true},
-			{field:'tax',title:'平台税点',width:40,sortable:true},
+			{field:'ticket_tax',title:'平台税点',width:40,sortable:true},
+			{field:'short_tax',title:'短线税点',width:40,sortable:true},
+			{field:'long_tax',title:'长线税点',width:40,sortable:true},
 			{field:'store_name',title:'店铺名称',width:40,sortable:true},
 			
-			{field:'create_user',title:'创建人',width:40,sortable:true,
+			{field:'create_user',title:'创建人',width:20,sortable:true,
 				formatter: function(value,row,index){
 					if (row.createUser){
 						return row.createUser.nickname;
@@ -111,8 +115,8 @@ $(function(){
 				}	
 			},
 			
-			{field:'create_time',title:'创建时间',width:40,sortable:true,formatter:formatDatebox},
-			{field:'update_user',title:'修改人',width:40,sortable:true,
+			{field:'create_time',title:'创建时间',width:30,sortable:true,formatter:formatDatebox},
+			{field:'update_user',title:'修改人',width:20,sortable:true,
 				formatter: function(value,row,index){
 					if (row.updateUser){
 						return row.updateUser.nickname;
@@ -121,7 +125,7 @@ $(function(){
 					}
 				}		
 			},
-			{field:'update_time',title:'修改时间',width:40,sortable:true,formatter:formatDatebox},
+			{field:'update_time',title:'修改时间',width:30,sortable:true,formatter:formatDatebox},
 		]]
 	});
 	$("#"+saveBtn).click(function(){
@@ -146,15 +150,19 @@ $(function(){
 		    	<table cellpadding="5">
 		    		<tr>
 		    			<td><div style="width:62px;text-align: right;">平台名称:</div></td>
-		    			<td><input class="easyui-textbox" name="data[name]" data-options="required:true" style="width:455px;height:30px;" type="text"></input></td>		    			
+		    			<td colspan="5"><input class="easyui-textbox" name="data[name]" data-options="required:true" style="width:455px;height:30px;" type="text"></input></td>		    			
 		    		</tr>
 		    		<tr>
-		    			<td><div style="width:62px;text-align: right;">平台税点:</div></td>
-		    			<td><input class="easyui-numberbox" name="data[tax]" data-options="required:true,min:0,precision:2" style="width:455px;height:30px;" type="text"></input></td>		    			
+		    			<td><div style="width:62px;text-align: right;">门票税点:</div></td>
+		    			<td><input class="easyui-numberbox" name="data[ticket_tax]" data-options="required:true,min:0,precision:2" style="width:60px;height:30px;" type="text"></input></td>	
+		    			<td><div style="width:62px;text-align: right;">短线税点:</div></td>
+		    			<td><input class="easyui-numberbox" name="data[short_tax]" data-options="required:true,min:0,precision:2" style="width:60px;height:30px;" type="text"></input></td>
+		    			<td><div style="width:62px;text-align: right;">长线税点:</div></td>
+		    			<td><input class="easyui-numberbox" name="data[long_tax]" data-options="required:true,min:0,precision:2" style="width:60px;height:30px;" type="text"></input></td>	    			
 		    		</tr>
 		    		<tr>
 		    			<td><div style="width:62px;text-align: right;">店铺名称:</div></td>
-		    			<td><input class="easyui-textbox" name="data[store_name]" data-options="required:true" style="width:455px;height:30px;" type="text"></input></td>		    			
+		    			<td colspan="5"><input class="easyui-textbox" name="data[store_name]" data-options="required:true" style="width:455px;height:30px;" type="text"></input></td>		    			
 		    		</tr>
 		    	</table>
 		    </form>

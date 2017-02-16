@@ -77,9 +77,17 @@ class PlatformController extends CommonController {
     	$beanName=$this->phpbean;
     	$example['relation']=false;
     	 
-    	$example['condition']=$condition;
     	$rtr=D($beanName)->getAllList($example,$beanName);
     	$this->ajaxReturn($rtr);
+    }
+    
+    
+    public function getAllAddColumnList(){
+        $beanName=$this->phpbean;
+        $example['relation']=false;
+    
+        $rtr=D($beanName)->getAllAddColumnList($example,$beanName);
+        $this->ajaxReturn($rtr);
     }
     
     

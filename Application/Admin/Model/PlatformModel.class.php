@@ -19,6 +19,16 @@ class PlatformModel extends CommonRelationModel{
     		),
     );
     
+    
+    public function getAllAddColumnList($example,$beanName){
+        $condition=$example['condition'];
+        $relation=$example['relation'];
+        return D($beanName)->
+                    distinct(true)->
+                    field("p.id,concat(p.name,'-',p.store_name) as name")->
+                   alias('p')->
+        where($condition)->relation($relation)->select();
+    }
 }
 
 ?>

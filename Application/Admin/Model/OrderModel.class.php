@@ -28,11 +28,11 @@ class OrderModel extends CommonRelationModel{
         $relation=$example['relation'];
         $result=$object->
             distinct(true)->
-            field('o.id,o.start_time,o.end_time,o.record_time,o.number,o.name,o.mobile,o.route_id,o.provider_id,
-                   o.sale_price,o.purchase_price,o.pay_price,o.platform_id,o.create_user,o.create_time,o.update_user,o.update_time,
-                   o.account_status,o.profit_price,o.order_num,o.remark,o.order_status,o.shuadan_price,
-                   o.refund_status,o.refund_customer_price,o.refund_provider_price,
-                   p.name as platform_name,p.store_name as store_name,p.tax as tax,pvd.name as provider_name,r.name as route_name')->
+            field('o.id,o.start_time,o.end_time,o.record_time,o.adult_number,o.child_number,o.name,o.mobile,o.route_id,o.provider_id,
+                   o.sale_price,o.outline_sale_price,o.purchase_price,o.pay_price,o.platform_id,o.create_user,o.create_time,o.update_user,o.update_time,
+                   o.account_status,o.profit_price,o.order_num,o.remark,o.order_status,o.shuadan_price,o.appid,o.other_price,o.air_price,o.hotal_price,
+                   o.refund_status,o.refund_customer_price,o.refund_provider_price,o.refund_remark,o.refund_total_price,
+                   p.name as platform_name,p.store_name as store_name,pvd.name as provider_name,r.name as route_name')->
             alias('o')->
             join('LEFT JOIN __PLATFORM__ p ON p.id = o.platform_id')->
             join('LEFT JOIN __PROVIDER__ pvd  ON pvd.id = o.provider_id')->
@@ -45,7 +45,11 @@ class OrderModel extends CommonRelationModel{
     
     public static function countTotalOrder($example,$beanName){
         $condition=$example['condition'];
-        return $count = D($beanName)->where($condition)->count();
+        return $count = D($beanName)->
+        distinct(true)->
+        field('o.id,o.create_user')->
+                           alias('o')->
+        where($condition)->count();
     }
     
     public static function updateAccountStatus($data,$beanName){
@@ -54,7 +58,7 @@ class OrderModel extends CommonRelationModel{
     
     
     public static function update_refund_info($data,$beanName){
-        return $count = D($beanName)->field('refund_customer_price,refund_provider_price,refund_status,refund_remark')->save($data);
+        return $count = D($beanName)->field('refund_customer_price,refund_provider_price,refund_status,refund_remark,refund_total_price')->save($data);
     }
     
     public static function uplateIsDetele($data,$beanName){

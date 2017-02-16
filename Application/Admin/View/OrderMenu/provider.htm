@@ -99,7 +99,7 @@ $(function(){
 			{field:'name',title:'名称',width:40,sortable:true},
 			{field:'remark',title:'备注',width:40,sortable:true},
 			
-			{field:'create_user',title:'创建人',width:40,sortable:true,
+			{field:'create_user',title:'创建人',width:20,sortable:true,
 				formatter: function(value,row,index){
 					if (row.createUser){
 						return row.createUser.nickname;
@@ -109,8 +109,8 @@ $(function(){
 				}	
 			},
 			
-			{field:'create_time',title:'创建时间',width:40,sortable:true,formatter:formatDatebox},
-			{field:'update_user',title:'修改人',width:40,sortable:true,
+			{field:'create_time',title:'创建时间',width:30,sortable:true,formatter:formatDatebox},
+			{field:'update_user',title:'修改人',width:20,sortable:true,
 				formatter: function(value,row,index){
 					if (row.updateUser){
 						return row.updateUser.nickname;
@@ -119,7 +119,7 @@ $(function(){
 					}
 				}		
 			},
-			{field:'update_time',title:'修改时间',width:40,sortable:true,formatter:formatDatebox},
+			{field:'update_time',title:'修改时间',width:30,sortable:true,formatter:formatDatebox},
 		]]
 	});
 	$("#"+saveBtn).click(function(){

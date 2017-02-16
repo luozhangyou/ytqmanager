@@ -14,6 +14,18 @@ $(function(){
 	    textField:'name'
 	});
 	
+	$('#route_search_order').combobox({
+	    url:'__ROOT__/Admin/Route/getAll',
+	    valueField:'id',
+	    textField:'name'
+	});
+	
+	$('#provider_search_order').combobox({
+	    url:'__ROOT__/Admin/Provider/getAll',
+	    valueField:'id',
+	    textField:'name'
+	});
+	
 	$('#form_route_provider').combobox({
 	    url:'__ROOT__/Admin/Provider/getAll',
 	    valueField:'id',
@@ -21,10 +33,11 @@ $(function(){
 	});
 	
 	$('#form_route_platform').combobox({
-	    url:'__ROOT__/Admin/Platform/getAll',
+	    url:'__ROOT__/Admin/Platform/getAllAddColumnList',
 	    valueField:'id',
 	    textField:'name'
 	});
+	
 	var th = $(".top").height();
 	th = 204-th
 	var wh = $(window).height()-th;
@@ -49,13 +62,13 @@ $(function(){
 		rownumbers:true,
 		pagination:pn,
 		pageSize:pr,
-		pageList:[30,50,80,100],
+		pageList:[30,50,80,100,500,1000,2000],
 		url:url,
 		fitColumns:true,
 		nowrap:true,
 		selectOnCheck:false,
 		animate:true,
-		checkOnSelect:true,
+		checkOnSelect:false,
 		onBeforeLoad: function () {  
 			
 		},
@@ -143,23 +156,27 @@ $(function(){
 		    {field:'id',checkbox:true},
 		]],
 		columns:[[  
-			{field:'order_num',title:'定单号',width:60,sortable:true},
-			{field:'start_time',title:'出发',width:40,sortable:true},
-			{field:'end_time',title:'完团',width:40,sortable:true},
-			{field:'record_time',title:'登记',width:40,sortable:true},
-			{field:'number',title:'人数',width:40,sortable:true},
-			{field:'name',title:'名称',width:40,sortable:true},
-			{field:'mobile',title:'手机',width:40,sortable:true},
+// 			{field:'order_num',title:'定单号',width:60,sortable:true},
+			{field:'start_time',title:'出发',width:60,sortable:true},
+			{field:'end_time',title:'完团',width:60,sortable:true},
+			{field:'record_time',title:'登记',width:60,sortable:true},
+			{field:'adult_number',title:'成人',width:30,align:'center'},
+			{field:'child_number',title:'儿童',width:30,align:'center'},
+// 			{field:'appid',title:'买家昵称',width:40,sortable:true},
+			{field:'name',title:'名称',width:40},
+			{field:'mobile',title:'手机',width:40},
 			{field:'route_name',title:'行程',width:40,sortable:true},
 			{field:'provider_name',title:'专线',width:40,sortable:true},
 			
-			{field:'sale_price',title:'卖价',width:40,sortable:true},
-			{field:'purchase_price',title:'接价',width:40,sortable:true},
-			{field:'pay_price',title:'现收',width:40,sortable:true},
+			{field:'sale_price',title:'平台收款',width:40,align:'center'},
+			{field:'outline_sale_price',title:'线下收款',width:40,align:'center'},
+			{field:'purchase_price',title:'接价',width:40,align:'center'},
+			{field:'pay_price',title:'现收',width:40,align:'center'},
+			{field:'refund_total_price',title:'退款合计',width:40,align:'center'},
 			{field:'platform_name',title:'平台',width:40,sortable:true},
 			{field:'store_name',title:'店名',width:40,sortable:true},
-			{field:'tax',title:'税点（%）',width:40,sortable:true},
-			{field:'profit_price',title:'利润(RMB)',width:40,sortable:true},
+// 			{field:'tax',title:'税点（%）',width:40,sortable:true},
+			{field:'profit_price',title:'利润(RMB)',width:40,align:'center'},
 			
 			{field:'create_user',title:'创建人',width:40,sortable:true,
 				formatter: function(value,row,index){
@@ -172,25 +189,29 @@ $(function(){
 			},
 			
 			/* {field:'create_time',title:'创建时间',width:40,sortable:true,formatter:formatDatebox}, */
-			{field:'update_user',title:'修改人',width:40,sortable:true,
-				formatter: function(value,row,index){
-					if (row.updateUser){
-						return row.updateUser.nickname;
-					} else {
-						return value;
-					}
-				}		
-			},
+// 			{field:'update_user',title:'修改人',width:40,sortable:true,
+// 				formatter: function(value,row,index){
+// 					if (row.updateUser){
+// 						return row.updateUser.nickname;
+// 					} else {
+// 						return value;
+// 					}
+// 				}		
+// 			},
 			/* {field:'update_time',title:'修改时间',width:40,sortable:true,formatter:formatDatebox}, */
-			{field:'shuadan_price',title:'刷单佣金',width:40,sortable:true},
+// 			{field:'shuadan_price',title:'刷单佣金',width:40,sortable:true},
 			{field:'account_status',title:'结算状态',width:40,sortable:true,
 				formatter: function(value,row,index){
 					var html='';
 					if (row.account_status){
-						if(row.account_status==1){
-							html=html+'<a href="javascript:upload_account_status_order('+row.id+');" class="easyui-linkbutton" style="width:80px;color:blue;">未结算</a>';
-						}else if(row.account_status==2){
-							html=html+'<span style="width:80px;color:red;">已结算</span>';
+						if(row.order_status==3){
+							html=html+'<span style="width:80px;color:red;">不能操作</span>';
+						}else{
+							if(row.account_status==1){
+								html=html+'<a href="javascript:upload_account_status_order('+row.id+');" class="easyui-linkbutton" style="width:80px;color:black;">未结算</a>';
+							}else if(row.account_status==2){
+								html=html+'<span style="width:80px;color:red;">已结算</span>';
+							}
 						}
 					}
 					return html;
@@ -201,7 +222,7 @@ $(function(){
 					var html='';
 					if (row.order_status){
 						if(row.order_status==1){
-							html=html+'<span style="width:80px;color:blue;">正常</span>';
+							html=html+'<span style="width:80px;color:red;">正常</span>';
 						}else if(row.order_status==2){
 							html=html+'<span style="width:80px;color:red;">刷单</span>';
 						}else if(row.order_status==3){
@@ -214,11 +235,20 @@ $(function(){
 			{field:'refund_status',title:'功能操作',width:40,sortable:true,
 				formatter: function(value,row,index){
 					var html='';
-					if (row.order_status){
-						if(row.order_status==1){
-							html=html+'<a href="javascript:update_refund_info_order('+row.id+');" class="easyui-linkbutton" style="width:80px;color:blue;">退款处理</a>';
+					if(row.account_status==1){
+						if (row.order_status){
+							if(row.order_status==1){
+								html=html+'<a href="javascript:update_refund_info_order('+row.id+');" class="easyui-linkbutton" style="width:80px;color:black;">退款处理</a>';
+							}else if(row.order_status==3){
+								html=html+'<a href=javascript:refund_info_detail('+row.id+','+row.refund_customer_price+','+row.refund_provider_price+','+row.refund_status+',"'+row.refund_remark+'") class="easyui-linkbutton" style="width:80px;color:black;">退款详情</a>';
+							}
+						}else{
+							html=html+'<span style="width:80px;color:red;">不能操作</span>';
 						}
+					}else if(row.account_status==2){
+						html=html+'<span style="width:80px;color:red;">不能操作</span>';
 					}
+					
 					return html;
 				}		
 			},
@@ -230,6 +260,8 @@ $(function(){
 	$("#"+cancelBtn).click(function(){
 		$('#'+addDiv).window('close');
 	});
+	
+	
 	
 });
 
@@ -252,7 +284,9 @@ function edit_order(){
 			'data[start_time]':selectedRow.start_time,
 			'data[end_time]':selectedRow.end_time,
 			'data[record_time]':selectedRow.record_time,
-			'data[number]':selectedRow.number,
+			'data[adult_number]':selectedRow.adult_number,
+			'data[child_number]':selectedRow.child_number,
+			'data[appid]':selectedRow.appid,
 			'data[name]':selectedRow.name,
 			'data[mobile]':selectedRow.mobile,
 			'data[number]':selectedRow.number,
@@ -260,9 +294,14 @@ function edit_order(){
 			'data[provider_id]':selectedRow.provider_id,
 			
 			'data[sale_price]':selectedRow.sale_price,
+			'data[outline_sale_price]':selectedRow.outline_sale_price,
 			'data[purchase_price]':selectedRow.purchase_price,
 			'data[pay_price]':selectedRow.pay_price,
 			'data[platform_id]':selectedRow.platform_id,
+			
+			'data[air_price]':selectedRow.air_price,
+			'data[hotal_price]':selectedRow.hotal_price,
+			'data[other_price]':selectedRow.other_price,
 			
 			'data[order_status]':selectedRow.order_status,
 			'data[shuadan_price]':selectedRow.shuadan_price,
@@ -272,6 +311,7 @@ function edit_order(){
 		$("#"+addDiv).window('open');
 	}
 }
+
 function remove_order(){
 	var selectedRow=$('#'+tableList).datagrid('getSelected');
 	if(null==selectedRow){
@@ -293,12 +333,16 @@ function search_order(){
 	var order_num_search_order=$("#order_num_search_order").textbox('getValue');
 	var account_status_search_order=$("#account_status_search_order").combobox('getValue');
 	var order_status_search_order=$("#order_status_search_order").combobox('getValue');
+	var route_search_order=$("#route_search_order").combobox('getValue');
+	var provider_search_order=$("#provider_search_order").combobox('getValue');
 	$('#'+tableList).datagrid('load',{
 		"start_time_01":start_time_01_search_order,
 		"start_time_02":start_time_02_search_order,
 		"order_num":order_num_search_order,
 		"account_status":account_status_search_order,
-		"order_status":order_status_search_order
+		"order_status":order_status_search_order,
+		"route_search_order":route_search_order,
+		"provider_search_order":provider_search_order
 	});
 }	
 
@@ -309,6 +353,30 @@ function upload_account_status_order(id){
 	var flag=rtr['flag'];
 	if(flag){
 		$('#'+tableList).datagrid('reload');
+	}
+}
+
+function upload_account_statuss_order(){
+	var selectedRow=$('#'+tableList).datagrid('getChecked');
+	if(selectedRow.length==0){
+		$.messager.alert('警告','至少勾选一行！','warning');
+	}else{
+		var msg='选中'+selectedRow.length+'项，批量结算操作不可撤消，结算定单不可再次退款等任何操作?'
+		$.messager.confirm('系统提示',msg, function(r){
+			if (r){
+				var o={};
+				var ids=new Array();
+				for(var i=0;i<selectedRow.length;i++){
+					ids.push(selectedRow[i].id);
+				}
+				o['ids']=ids;
+				var rtr=ajaxReturnRow("__ROOT__/Admin/Order/update_account_statuss",o);
+				if(rtr['flag']){
+					$('#'+tableList).datagrid('reload');
+				}
+			}
+		});
+		
 	}
 }
 
@@ -359,6 +427,32 @@ $("#refundCancelBtn_order").click(function(){
 $("#refundSaveBtn_order").click(function(){
 	ajaxSubmitForm('refundForm_order','__ROOT__/Admin/Order/update_refund_info','refundDiv_order',tableList);
 });
+
+function open_countDiv_order(){
+	var selectedRow=$('#'+tableList).datagrid('getChecked');
+	if(selectedRow.length==0){
+		$.messager.alert('警告','至少勾选一行！','warning');
+	}else{
+		var msg='选中'+selectedRow.length+'项进行统计数据！';
+		var msg='选中'+selectedRow.length+'项进行统计数据！'
+		$("#title_countDiv_order").text(msg);
+
+		$('#countDiv_order').window('open');
+		
+	}
+}
+
+function refund_info_detail(id,refund_customer_price,refund_provider_price,refund_status,refund_remark){
+	$('#refundForm_order').form('load',{
+		'data[id]':id,
+		'data[refund_customer_price]':refund_customer_price,
+		'data[refund_provider_price]':refund_provider_price,
+		'data[refund_status]':refund_status,
+		'data[refund_remark]':refund_remark,
+	});
+	$("#refundDiv_order").window('open');
+}
+
 </script>
 <div id="search_order" style="padding:5px;height:auto">
 	<div style="margin-bottom:5px;float:left;">
@@ -366,38 +460,43 @@ $("#refundSaveBtn_order").click(function(){
 		<a href="javascript:edit_order();" class="easyui-linkbutton" iconCls="fa fa-easyui fa-edit" plain="true">修改</a>
 		<a href="javascript:remove_order();" class="easyui-linkbutton" iconCls="fa fa-easyui fa-times" plain="true">删除</a>
 		<a href="javascript:cancel_select_order();" class="easyui-linkbutton" iconCls="fa fa-easyui fa-check-square-o" plain="true">取消选择</a>
-		<a href="javascript:reload_order();" class="easyui-linkbutton" iconCls="fa fa-easyui fa-retweet" plain="true">重载数据</a>
+		<a href="javascript:reload_order();" class="easyui-linkbutton" iconCls="fa fa-easyui fa-retweet" plain="true">重载数据</a>||
+		<a href="javascript:upload_account_statuss_order();" class="easyui-linkbutton" iconCls="fa fa-easyui fa-credit-card" plain="true">批量结算</a>
+		<a href="javascript:open_countDiv_order();" class="easyui-linkbutton" iconCls="fa fa-easyui fa-pie-chart" plain="true">批量统计</a>
 	</div>
 	<div style="float:right;">
-		<a href="javascript:reload_order();" class="easyui-linkbutton" iconCls="fa fa-easyui fa-retweet" plain="true">根据搜索条件结算</a>
-		<a href="javascript:reload_order();" class="easyui-linkbutton" iconCls="fa fa-easyui fa-retweet" plain="true">根据搜索条件统计</a>
+<!-- 		<a href="javascript:reload_order();" class="easyui-linkbutton" iconCls="fa fa-easyui fa-retweet" plain="true">更多功能</a> -->
 	</div>
 	<div style="clear:both;"></div>
 	<hr/>
 	<div>
-		<span>出发日期 从:</span><input id="start_time_01_search_order" class="easyui-datebox" style="width:120px" />
-		<span>到:</span><input id="start_time_02_search_order" class="easyui-datebox" style="width:120px" />
-		<span>定单编号:</span><input id="order_num_search_order" class="easyui-textbox" style="width:120px" />
+		<span>出发日期 从:</span><input id="start_time_01_search_order" class="easyui-datebox" style="width:120px;height:26px;" />
+		<span>到:</span><input id="start_time_02_search_order" class="easyui-datebox" style="width:120px;height:26px;" />
+		<span>定单号:</span><input id="order_num_search_order" class="easyui-textbox" style="width:120px;height:26px;" />
+		<span>行程:</span>
+			<select id="route_search_order" style="width:120px;height:26px;" class="easyui-combobox"></select>
+		<span>专线:</span>
+			<select id="provider_search_order" style="width:120px;height:26px;" class="easyui-combobox"></select>
 		<span>结算状态:</span>
-			<select id="account_status_search_order" style="width:120px" class="easyui-combobox">
+			<select id="account_status_search_order" style="width:120px;height:26px;" class="easyui-combobox">
 				<option value="">全部</option>
 				<option value="1">未结算</option>
 				<option value="2">已结算</option>
 			</select>
 		<span>定单状态:</span>
-			<select id="order_status_search_order" style="width:120px" class="easyui-combobox">
+			<select id="order_status_search_order" style="width:120px;height:26px;" class="easyui-combobox">
 				<option value="">全部</option>
 				<option value="1">正常</option>
 				<option value="2">刷单</option>
 				<option value="3">退款</option>
 			</select>
-		<a href="javascript:search_order();" class="easyui-linkbutton" iconCls="icon-search">搜索</a>
+		<a style="width:120px;height:26px;" href="javascript:search_order();" class="easyui-linkbutton" iconCls="icon-search" >搜索</a>
 	</div>
 </div>
 <div>
 	<table id="tableList_order"></table>
 </div>
-<div id="addDiv_order" class="easyui-window" title="添加" data-options="iconCls:'fa fa-dot-circle-o',closed:true" style="width:700px;height:600px;padding:5px;">
+<div id="addDiv_order" class="easyui-window" title="添加" data-options="iconCls:'fa fa-dot-circle-o',closed:true" style="width:700px;height:640px;padding:5px;">
 	<div class="easyui-layout" data-options="fit:true">
 		<div data-options="region:'center',border:true">
 			<form id="addForm_order" class="easyui-form" method="post" data-options="novalidate:true">
@@ -405,7 +504,7 @@ $("#refundSaveBtn_order").click(function(){
 		    	<table cellpadding="5">
 		    		<tr>   			
 		    			<td><div style="width:62px;text-align: right;">定单号:</div></td>
-		    			<td colspan="3"><input class="easyui-textbox" name="data[order_num]" data-options="required:true" style="width:546px;height:30px;" type="text"></input></td>	
+		    			<td colspan="3"><input class="easyui-textbox" name="data[order_num]" data-options="" style="width:546px;height:30px;" type="text"></input></td>	
 		    			
 		    		</tr>
 		    		<tr>   			
@@ -419,9 +518,18 @@ $("#refundSaveBtn_order").click(function(){
 		    			<td><div style="width:62px;text-align: right;">登记:</div></td>
 		    			<td><input class="easyui-datebox" name="data[record_time]" data-options="required:true" style="width:230px;height:30px;" type="text"></input></td>		    			
 		    		
-		    			<td><div style="width:62px;text-align: right;">人数:</div></td>
-		    			<td><input class="easyui-numberbox" name="data[number]" data-options="required:true" style="width:230px;height:30px;" type="text"></input></td>		    			
+		    			<td><div style="width:62px;text-align: right;">买家昵称:</div></td>
+		    			<td><input class="easyui-textbox" name="data[appid]" data-options="" style="width:230px;height:30px;" type="text"></input></td>		    			
 		    		</tr>
+		    		
+		    		<tr>
+		    			<td><div style="width:62px;text-align: right;">成人数:</div></td>
+		    			<td><input class="easyui-textbox" name="data[adult_number]" data-options="required:true" style="width:230px;height:30px;" type="text"></input></td>		    			
+		    		
+		    			<td><div style="width:62px;text-align: right;">儿童数:</div></td>
+		    			<td><input class="easyui-textbox" name="data[child_number]" style="width:230px;height:30px;" type="text"></input></td>		    			
+		    		</tr>
+		    		
 		    		<tr>
 		    			<td><div style="width:62px;text-align: right;">姓名:</div></td>
 		    			<td><input class="easyui-textbox" name="data[name]" data-options="required:true" style="width:230px;height:30px;" type="text"></input></td>		    			
@@ -446,32 +554,48 @@ $("#refundSaveBtn_order").click(function(){
 						<td><select id="form_route_provider" name="data[provider_id]" class="easyui-combobox" panelHeight="auto" style="width:230px;height:26px;"></select></td>	    			
 		    		</tr>
 		    		<tr>
-		    			<td><div style="width:62px;text-align: right;">卖价:</div> </td>
+		    			<td><div style="width:62px;text-align: right;">平台收款:</div> </td>
 						<td><input class="easyui-numberbox" id="sale_price_route" name="data[sale_price]" data-options="required:true,min:0,precision:2" style="width:230px;height:30px;" type="text"></input></td>
 						
-						<td><div style="width:62px;text-align: right;">接价:</div> </td>
-						<td><input class="easyui-numberbox" id="purchase_price_route" name="data[purchase_price]" data-options="required:true,precision:2" style="width:230px;height:30px;" type="text"></input></td>    			
+						<td><div style="width:62px;text-align: right;">线下收款:</div> </td>
+						<td><input class="easyui-numberbox" id="outline_sale_price_route" name="data[outline_sale_price]" data-options="required:true,min:0,precision:2" style="width:230px;height:30px;" type="text"></input></td>
+									
 		    		</tr>
 		    		<tr>
-						<td><div style="width:62px;text-align: right;">收现:</div> </td>
-						<td><input class="easyui-numberbox" id="pay_price_route" name="data[pay_price]" data-options="precision:2" style="width:230px;height:30px;" type="text"></input></td>    			
-		    		
+		    			<td><div style="width:62px;text-align: right;">接价:</div> </td>
+						<td><input class="easyui-numberbox" id="purchase_price_route" name="data[purchase_price]" data-options="required:true,precision:2" style="width:230px;height:30px;" type="text"></input></td> 
+						
+						<td><div style="width:62px;text-align: right;">专线收现:</div> </td>
+						<td><input class="easyui-numberbox" id="pay_price_route" name="data[pay_price]" data-options="precision:2" style="width:230px;height:30px;" type="text"></input></td>
+		    		</tr>
+		    		   
+		    		<tr>
 		    			<td><div style="width:62px;text-align: right;">平台:</div> </td>
-						<td><select id="form_route_platform" name="data[platform_id]" class="easyui-combobox" panelHeight="auto" style="width:230px;height:26px;"></select></td>	    									
-		    		</tr>
-		    		<tr>
+						<td><select id="form_route_platform" name="data[platform_id]" class="easyui-combobox" panelHeight="auto" style="width:230px;height:26px;"></select></td>	
+						
 		    			<td><div style="width:62px;text-align: right;">定单状态:</div> </td>
 						<td>
 							<select id="form_route_order_status" name="data[order_status]" class="easyui-combobox" data-options="editable:false" style="width:230px;height:26px;">
 								<option value="1">正常</option>
 								<option value="2">刷单</option>
 							</select>
-						</td>	    									
+						</td>	    						
+		    		</tr>
+		    		<tr>
+		    			<td><div style="width:62px;text-align: right;">机票价格:</div> </td>
+						<td><input class="easyui-numberbox" name="data[air_price]" data-options="precision:2" style="width:230px;height:30px;" type="text"></input></td> 
+		    		
+						<td><div style="width:62px;text-align: right;">酒店价格:</div> </td>
+						<td><input class="easyui-numberbox" name="data[hotal_price]" data-options="precision:2" style="width:230px;height:30px;" type="text"></input></td>    					    			
+		    		</tr>
+		    		<tr>
+		    			<td><div style="width:62px;text-align: right;">其它支出:</div> </td>
+						<td><input class="easyui-numberbox" name="data[other_price]" data-options="precision:2" style="width:230px;height:30px;" type="text"></input></td> 
 		    		
 						<td><div style="width:62px;text-align: right;">刷单佣金:</div> </td>
 						<td><input class="easyui-numberbox" id="shuadan_price_route" name="data[shuadan_price]" data-options="precision:2" style="width:230px;height:30px;" type="text"></input></td>    					    			
 		    		</tr>
-		    		<tr>
+		    		<!-- <tr>
 						<td><div style="width:62px;text-align: right;"></div> </td>
 						<td colspan="3">
 							<center>
@@ -481,7 +605,7 @@ $("#refundSaveBtn_order").click(function(){
 								</div>
 							</center>
 						</td>    	
-		    		</tr>
+		    		</tr> -->
 		    		<tr>
 		    			<td><div style="width:62px;text-align: right;">备注:</div></td>
 		    			<td colspan="3"><input class="easyui-textbox" name="data[remark]" data-options="multiline:true," style="height:100px;width:550px;"></input></td>
@@ -551,13 +675,26 @@ $("#refundSaveBtn_order").click(function(){
 	</div>
 </div>
 
-<script>
+<div id="countDiv_order" class="easyui-window" title="统计面板" data-options="iconCls:'fa fa-dot-circle-o',closed:true" style="width:700px;height:600px;padding:5px;">
+	<div class="easyui-layout" data-options="fit:true">
+		<div data-options="region:'center',border:true">
+			<div style="padding:30px;">
+				<h1 id="title_countDiv_order" style="text-align: center;"></h1>
+				<div>实收：<span id="title_countDiv_order"></span></div>
+				<div>结算：<span id="title_countDiv_order"></span></div>
+				<div>利润：<span id="profit_countDiv_order"></span></div>
+				<div>人数：<span id="profit_countDiv_order"></span></div>
+			</div>
+		</div>
+	</div>
+</div>
 
+<script>
 function add_idcard_route(){
 	$("#idcard_container_route");
 }
 
-function count_profit_route(){
+/* function count_profit_route(){
 	var sale_price=$("#sale_price_route").numberbox('getValue');
 	var purchase_price=$("#purchase_price_route").numberbox('getValue');
 	
@@ -599,5 +736,5 @@ function count_profit_route(){
 		});
 		return;
 	}
-}
+} */
 </script>
